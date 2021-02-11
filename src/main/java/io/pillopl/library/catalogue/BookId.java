@@ -5,6 +5,9 @@ import lombok.Value;
 
 import java.util.UUID;
 
+/**
+ * 值对象
+ */
 @Value
 public class BookId {
 

@@ -51,8 +51,8 @@ class SheetsReadModel implements DailySheet {
     private List<Map<String, Object>> findHoldsToExpire() {
         return sheets.query(
                 "SELECT h.book_id, h.hold_by_patron_id, h.hold_at_branch FROM holds_sheet h WHERE h.status = 'ACTIVE' and h.hold_till <= ?",
-                new Object[]{from(Instant.now(clock))},
-                new ColumnMapRowMapper());
+                new ColumnMapRowMapper(),
+                Instant.now(clock));
     }
 
     private ExpiredHold toExpiredHold(Map<String, Object> map) {
@@ -74,8 +74,8 @@ class SheetsReadModel implements DailySheet {
     private List<Map<String, Object>> findCheckoutsToOverdue() {
         return sheets.query(
                 "SELECT c.book_id, c.checked_out_by_patron_id, c.checked_out_at_branch FROM checkouts_sheet c WHERE c.status = 'CHECKEDOUT' and c.checkout_till <= ?",
-                new Object[]{from(Instant.now(clock))},
-                new ColumnMapRowMapper());
+                new ColumnMapRowMapper(),
+                Instant.now(clock));
     }
 
     private OverdueCheckout toOverdueCheckout(Map<String, Object> map) {
